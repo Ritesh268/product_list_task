@@ -42,81 +42,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   const SizedBox(
                     height: AppSizes.size20,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.item.title ?? '',
-                        style: AppTextStyle.black14Font600,
-                      ),
-                      const SizedBox(
-                        height: AppSizes.size10,
-                      ),
-                      Text(
-                        '\$${widget.item.price.toString()}',
-                        style: AppTextStyle.black14Font600,
-                      ),
-                      const SizedBox(
-                        height: AppSizes.size10,
-                      ),
-                      Text(
-                        AppConstString.productDetails,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyle.black16Bold,
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        widget.item.description ?? '',
-                        style: AppTextStyle.black14Normal,
-                      ),
-                    ],
-                  ),
+                  productDetailsWidget(),
                 ],
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(16.0),
-              color: Colors.white.withOpacity(0.9),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: AppColors.white,
-                  backgroundColor: AppColors.btnColor,
-                  textStyle: AppTextStyle.black12Normal
-                      .copyWith(color: AppColors.white),
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  Provider.of<ProductListProvider>(context, listen: false)
-                      .add(widget.item);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        AppConstString.addedToCart,
-                        style: AppTextStyle.black14W500.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                child: Text(
-                  AppConstString.addToCart,
-                  style: AppTextStyle.black16Bold.copyWith(
-                    color: AppColors.white,
-                  ),
-                ),
-              ),
-            ),
-          )
+          addToCartButton(),
         ],
       ),
     );
@@ -182,6 +113,83 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         );
       },
+    );
+  }
+
+  Widget productDetailsWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.item.title ?? '',
+          style: AppTextStyle.black14Font600,
+        ),
+        const SizedBox(
+          height: AppSizes.size10,
+        ),
+        Text(
+          '\$${widget.item.price.toString()}',
+          style: AppTextStyle.black14Font600,
+        ),
+        const SizedBox(
+          height: AppSizes.size10,
+        ),
+        Text(
+          AppConstString.productDetails,
+          textAlign: TextAlign.center,
+          style: AppTextStyle.black16Bold,
+        ),
+        const SizedBox(
+          height: 5.0,
+        ),
+        Text(
+          widget.item.description ?? '',
+          style: AppTextStyle.black14Normal,
+        ),
+      ],
+    );
+  }
+
+  Widget addToCartButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.all(16.0),
+        color: Colors.white.withOpacity(0.9),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: AppColors.white,
+            backgroundColor: AppColors.btnColor,
+            textStyle:
+                AppTextStyle.black12Normal.copyWith(color: AppColors.white),
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          onPressed: () {
+            Provider.of<ProductListProvider>(context, listen: false)
+                .add(widget.item);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  AppConstString.addedToCart,
+                  style: AppTextStyle.black14W500.copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
+            );
+          },
+          child: Text(
+            AppConstString.addToCart,
+            style: AppTextStyle.black16Bold.copyWith(
+              color: AppColors.white,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -10,11 +10,10 @@ class BaseView<T extends ChangeNotifier> extends StatefulWidget {
       {super.key, required this.builder, required this.onModelReady});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _BaseViewState<T> createState() => _BaseViewState<T>();
+  BaseViewState<T> createState() => BaseViewState<T>();
 }
 
-class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>>
+class BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>>
     with AfterInitMixin<BaseView<T>> {
   late T model;
 

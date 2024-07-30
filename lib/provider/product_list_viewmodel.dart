@@ -13,7 +13,7 @@ class ProductListProvider extends BaseViewModel {
 
   Future<void> getProductList() async {
     try {
-      setViewState(ViewState.BUSY);
+      setViewState(ViewState.busy);
       final response = await _service.dashboardListApi();
 
       _listOfProduct = response;
@@ -24,7 +24,7 @@ class ProductListProvider extends BaseViewModel {
         ),
       );
     } finally {
-      setViewState(ViewState.IDLE);
+      setViewState(ViewState.idle);
     }
   }
 

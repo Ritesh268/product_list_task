@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:product_list_task/config/theme/app_colors.dart';
 import 'package:product_list_task/config/theme/app_text_style.dart';
 import 'package:product_list_task/constants/app_const_text.dart';
+import 'package:product_list_task/model/product_list_model.dart';
 import 'package:product_list_task/provider/product_list_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -41,51 +42,7 @@ class _CartScreenState extends State<CartScreen> {
                           itemBuilder: (context, index) {
                             final product = cart.items.keys.elementAt(index);
                             final quantity = cart.items[product]!;
-                            return Card(
-                              child: ListTile(
-                                leading: SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: Image.network(product.image ?? '')),
-                                title: Text(
-                                  product.title ?? '',
-                                  style: AppTextStyle.black16Bold,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '\$${product.price!.toStringAsFixed(2)}',
-                                      style: AppTextStyle.black14w500,
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          icon: const Icon(Icons.remove),
-                                          onPressed: () {
-                                            cart.remove(product);
-                                          },
-                                        ),
-                                        Text(quantity.toString()),
-                                        IconButton(
-                                          icon: const Icon(Icons.add),
-                                          onPressed: () {
-                                            cart.add(product);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                trailing: IconButton(
-                                  icon: const Icon(Icons.remove_circle_outline),
-                                  onPressed: () {
-                                    cart.remove(product);
-                                  },
-                                ),
-                              ),
-                            );
+                            return addToCartItem(product, quantity, cart);
                           },
                         ),
                       ),
@@ -116,26 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ],
                               ),
                             ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.white,
-                                backgroundColor: AppColors.btnColor,
-                                textStyle: AppTextStyle.black12Normal
-                                    .copyWith(color: AppColors.white),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 35),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                AppConstString.placeOrder,
-                                style: AppTextStyle.black16Bold.copyWith(
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            )
+                            placeOrderButton()
                           ],
                         ),
                       ),
@@ -143,6 +81,74 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 );
         },
+      ),
+    );
+  }
+
+  Widget addToCartItem(
+      ProductListModel product, int quantity, ProductListProvider cart) {
+    return Card(
+      child: ListTile(
+        leading: SizedBox(
+            height: 50, width: 50, child: Image.network(product.image ?? '')),
+        title: Text(
+          product.title ?? '',
+          style: AppTextStyle.black16Bold,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '\$${product.price!.toStringAsFixed(2)}',
+              style: AppTextStyle.black14w500,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.remove),
+                  onPressed: () {
+                    cart.remove(product);
+                  },
+                ),
+                Text(quantity.toString()),
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    cart.add(product);
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.remove_circle_outline),
+          onPressed: () {
+            cart.remove(product);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget placeOrderButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.btnColor,
+        textStyle: AppTextStyle.black12Normal.copyWith(color: AppColors.white),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      onPressed: () {},
+      child: Text(
+        AppConstString.placeOrder,
+        style: AppTextStyle.black16Bold.copyWith(
+          color: AppColors.white,
+        ),
       ),
     );
   }

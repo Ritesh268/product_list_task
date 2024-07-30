@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-// ignore: constant_identifier_names
-enum ViewState { IDLE, BUSY }
+enum ViewState { idle, busy }
 
 class BaseViewModel extends ChangeNotifier {
-  ViewState _viewState = ViewState.BUSY;
+  ViewState _viewState = ViewState.busy;
 
   ViewState get viewState => _viewState;
 

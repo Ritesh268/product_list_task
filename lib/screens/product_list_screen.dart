@@ -31,7 +31,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           });
         },
         builder: (context, productListProvider, child) {
-          return productListProvider.viewState == ViewState.BUSY
+          return productListProvider.viewState == ViewState.busy
               ? const ShimmerLoading()
               : RefreshIndicator(
                   onRefresh: () async {
